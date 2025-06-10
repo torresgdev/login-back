@@ -1,0 +1,23 @@
+
+services:
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-auth_db}    
+      POSTGRES_USER: ${DB_USERNAME:-user}        
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password} 
+    ports:
+      - "${DB_PORT:-5432}:5432" 
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    restart: unless-stopped
+    networks:
+      - auth-network
+volumes:
+  db_data: 
+
+
+networks:
+  auth-network: 
+    driver: bridge 
